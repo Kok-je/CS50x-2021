@@ -6,8 +6,7 @@ CS50 courseload and psets
 - [Problem Set 1: C](/C/pset1) - <a href='https://cs50.harvard.edu/x/2020/psets/1/'> Assignments 1</a>
   * [hello](/C/pset1/hello)
   * mario
-    + [less](/C/pset1/mario/less)
-    + [more](/C/pset1/mario/more)
+    + [more](/C/pset1/mario)
   * [cash](/C/pset1/cash)
   * [credit](/C/pset1/credit)
 - [Problem Set 2: Crypto](/C/pset2) - <a href='https://cs50.harvard.edu/x/2020/psets/2/'> Assignments 2</a> 
