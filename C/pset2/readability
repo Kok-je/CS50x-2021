@@ -1,0 +1,86 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+
+//declaring functions
+int count_letters(char text[]);
+int count_words(char text[]);
+int count_sentences(char text[]);
+
+int main(void)
+{
+    //get user input text
+    string text = get_string("Text: \n");
+    //printf("%i letter(s) \n", count_letters(text));
+    //printf("%i word(s) \n", count_words(text));
+    //printf("%i sentence(s) \n", count_sentences(text));
+
+    float L = ((float)count_letters(text) / (float)count_words(text)) * 100;   //Find L, average number of letters per 100 words
+    float S = ((float)count_sentences(text) / (float)count_words(text)) * 100; //Find S, average number of sentences per 100 words
+    float index = round(0.0588 * L - 0.296 * S - 15.8) ;           //apply Coleman-Liau index
+
+    //printf("L: %f \n", L);
+    //printf("S: %f \n", S);
+    //printf("Index: %f \n \n", index);
+
+    if (index >= 16)
+    {
+        printf("Grade 16+");       //If the resulting index number is 16 or higher (equivalent to or greater than a senior undergraduate reading level)
+    }
+    else if (index < 1)
+    {
+        printf("Before Grade 1");  //If the index number is less than 1
+    }
+    else
+    {
+        printf("Grade %i", (int)index);
+    }
+    printf("\n");
+}
+
+
+//function to count total letters in text a-z, A-Z
+int count_letters(char text[])
+{
+    int length = strlen(text), counter = 0;
+
+    for (int i = 0; i < length; i++)
+    {
+        if (isalpha(text[i]))         //increase count by 1 when text[i], a character in text is alpha
+        {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+int count_words(char text[])
+{
+    int length = strlen(text), counter = 0;
+
+    for (int i = 0; i < length ; i++)
+    {
+        if (isblank(text[i]))       //increase count by 1 when text[i], a character in text is a space or tab
+        {
+            counter++;
+        }
+    }
+    return counter + 1;             //Counter counts space after a word, One'space1'Two'space2'Three. Hence counter + 1 to account for the last word that does not have a 'space' after it.
+}
+
+int count_sentences(char text[])
+{
+    int length = strlen(text), counter = 0;
+
+    for (int i = 0; i < length ; i++)
+    {
+        if (text[i] == '.' || text[i] == '!' || text[i] == '?')     //increase count by 1 when text[i], a character in text is a period (full stop, exclamation mark, question mark) to signal end of sentence. comma not included
+        {
+            counter++;
+        }
+    }
+    return counter;
+}
+
