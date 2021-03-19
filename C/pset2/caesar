@@ -1,0 +1,50 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+int main(int argc, string argv[])
+{
+    if(argc == 2)                        //run this only if user input one command-line argument
+    {
+        for(int i = 0, n = strlen(argv[1]); i < n ; i++)       //check if user input a number for command-line argument
+        {
+            if(isdigit(argv[1][i]) == 0)
+            {
+                printf("Usage: ./caesar key \n");
+                return 1;
+            }
+        }
+        printf("Success \n");
+        int key = atoi(argv[1]);                               //converts user input string to integer using atoi
+
+        string plaintext = get_string("plaintext: ");          //get user input plaintext
+        printf("ciphertext: ");
+        for(int i = 0, n = strlen(plaintext) ; i < n ; i++)    //use strlen to loop through string and analyze each char in string
+        {
+            char c = plaintext[i];
+            if(isalpha(c) == 0)                                //if character is not an alphabet, output it as it is without modifying it
+            {
+                printf("%c", c);
+            }
+            else if(c >= 65 && c <= 90)                        //if character is an uppercase alphabet run this
+            {
+                c = ((c - 65) + key) % 26;                     //use formula = convert ASCII to alphabetical index, add key, %26, get an alphabetical index (<26) which represents encrypted char c
+                printf("%c", c + 65);                          //convert index back to ASCII and print
+            }
+            else if (c >= 97 && c <= 122)                      //if character is an lowercase alphabet run this
+            {
+                c = ((c - 97) + key) % 26;                     //use formula = convert ASCII to alphabetical index, add key, %26, get an alphabetical index (<26) which represents encrypted char c
+                printf("%c", c + 97);                          //convert index back to ASCII and print
+            }
+        }
+        printf("\n");
+        return 0;
+    }
+    else                                 //run this if user input (more than one or no) command-line argument
+    {
+        printf("Usage: ./caesar key \n");
+        return 1;
+    }
+}
