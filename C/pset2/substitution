@@ -1,0 +1,90 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+int main(int argc, string argv[])
+{
+    if (argc == 2)                       //run this only if user input one command-line argument
+    {
+        string key = argv[1];            //declare key as the new substitution key user has entered
+
+        for (int i = 0, k = strlen(key); i < k ; i++)       
+        {
+            if (isalpha(key[i]) == 0)                     //check if user input alphabet 
+            {
+                printf("Usage: ./substitution key \n");
+                return 1;
+            }
+            else if (strlen(key) != 26)                   //check if user input exactly 26 characters 
+            {
+                printf("Key must contain 26 characters. \n");
+                return 1;
+            }
+             
+            for (int s = 0, count = 0; s < k ; s++)
+            {
+                if (key[i] == key[s])
+                {
+                    count++;
+                    if (count > 1)
+                    {
+                        printf("Key must not contain duplicates \n");
+                        return 1;
+                    }
+                }
+            }
+            
+        }
+
+
+        string plaintext = get_string("plaintext: ");          //get user input plaintext
+
+        string abc = "abcdefghijklmnopqrstuvwxyz";
+        int n = strlen(plaintext);                                 //total length of input
+        char ciphertext[n];
+        strcpy(ciphertext, plaintext);                             //Duplicate plaintext into ciphertext, and change each char to encrypted char in loop below
+
+
+        for (int i = 0 ; i < n ; i++)                              //use strlen to loop through plaintext and analyze each char in it
+        {
+
+            if (isalpha(plaintext[i]) == 0)                               //if character is not an alphabet, assign it to ciphertext without modifying it
+            {
+                ciphertext[i] = plaintext[i];
+            }
+            else if (isupper(plaintext[i]) != 0)      //uppercase
+            {
+                for (int j = 0; j < 27; j++)
+                {
+                    if(abc[j] == tolower(plaintext[i]))         //for every char in plaintext, loop through abc alphabet. If match, select that alphabet index in abc, map it to alphabet index in key
+                    {
+                        ciphertext[i] = toupper(key[j]);        //encrypted char, ciphertext[i] now assigned the (upper case value) alphabet index in key
+                    }
+                }
+            }
+            else if (islower(plaintext[i]) != 0)      //lowercase
+            {
+                for (int j = 0; j < 27; j++)
+                {
+                    if (abc[j] == plaintext[i])                 //for every char in plaintext, loop through abc alphabet. If match, select that alphabet index in abc, map it to alphabet index in key
+                    {
+                        ciphertext[i] = tolower(key[j]);        //encrypted char, ciphertext[i] now assigned the (lower case value) alphabet index in key
+                    }
+                }
+            }
+
+
+        }
+
+        printf("ciphertext: %s", ciphertext);
+        printf("\n");
+        return 0;
+    }
+    else                                 //run this if user input (more than one or no) command-line argument
+    {
+        printf("Usage: ./substitution key \n");
+        return 1;
+    }
+}
