@@ -26,7 +26,6 @@ CS50 courseload and psets
 - [Problem Set 6: Python](/Python/pset6/) - <a href='https://cs50.harvard.edu/x/2020/psets/6/'> Assignments 6</a>
   * [hello](/Python/pset6/hello)
   * mario
-    + [less](/Python/pset6/mario/less)
     + [more](/Python/pset6/mario/more)
   * [cash](/Python/pset6/cash)
   * [credit](/Python/pset6/credit)
