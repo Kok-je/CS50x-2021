@@ -1,0 +1,37 @@
+from cs50 import get_float
+from math import floor
+
+
+
+
+
+change = get_float("Change owed = $")
+
+
+while change < 0 or change == None:
+    change = get_float("Change owed = $")
+
+
+def get_change(change):
+    coins = 0
+    change_cents = floor(change * 100)
+    
+    while change_cents >= 25:
+        change_cents = change_cents - 25
+        coins += 1
+        
+    while change_cents >= 10:
+        change_cents = change_cents - 10
+        coins += 1
+        
+    while change_cents >= 5:
+        change_cents = change_cents - 5
+        coins += 1
+        
+    while change_cents >= 1:
+        change_cents = change_cents - 1
+        coins += 1
+    
+    print(coins)
+    
+get_change(change)
