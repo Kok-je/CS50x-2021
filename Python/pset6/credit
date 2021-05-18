@@ -1,0 +1,48 @@
+
+
+def main():
+
+    cardnumber = input("What is your card number: ")
+    count = len(cardnumber)
+
+    if count != 13 and count != 15 and count != 16:     # invalid number of digits
+        print("INVALID\n")
+
+    s = []
+    for i in cardnumber[::-1]:   # reverse order of cardnumber
+        s.append(int(i))
+
+    for i in range(1, len(s), 2):
+        s[i] = int(s[i]) * 2     # iterate through each num in s, multiply every other digit by 2
+
+    totalsum = 0
+    for i in range(0, len(s)):
+        next = int(s[i] % 10) + int((s[i]/10) % 10)
+        totalsum = totalsum + next
+
+    k = []
+    for i in cardnumber[::-1]:   # reverse order of cardnumber
+        k.append(int(i))
+
+    if totalsum % 10 != 0:
+        print("INVALID\n")
+    else:
+        if count == 13 and k[12] == 4:        # VISA card
+            print("VISA\n")
+
+        elif count == 15 and k[14] == 3 and (k[13] == 4 or k[13] == 7):          # AMEX card
+            print("AMEX\n")
+
+        elif count == 16:
+            if k[15] == 4:   # VISA card
+                print("VISA\n")
+            elif k[15] == 5 and (k[14] == 1 or k[14] == 2 or k[14] == 3 or k[14] == 4 or k[14] == 5):    # MASTERCARD card
+                print("MASTERCARD\n")
+            else:
+                print("INVALID\n")
+
+        else:
+            print("INVALID\n")
+
+
+main()
