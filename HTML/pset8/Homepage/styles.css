@@ -1,0 +1,69 @@
+
+#name{
+    font-family:"Times New Roman", Times, serif;
+    font-size:30px;
+    background-color: LightBlue;
+    color: Teal;
+    opacity:0.85;
+}
+
+.about{
+    font-family:"Trebuchet", serif;
+}
+
+h1{
+    color:MediumSlateBlue;
+}
+
+li:hover{
+    color:blue;
+}
+
+h4.about{
+    font-size:40px;
+    color:DarkSlateGray;
+}
+
+table, th, td{
+    border:1px solid black;
+}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+  float: left;
+  width: 20%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create three equal columns that floats next to each other */
+.project_column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.project_row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .project_column {
+    width: 100%;
+  }
+}

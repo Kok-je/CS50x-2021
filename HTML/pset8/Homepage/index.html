@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <link href="styles.css" rel="stylesheet">
+        <title>My Webpage</title>
+    </head>
+    <body>
+
+        <!--This is a nav bar COMMON TO ALL HTML FILES from bootstrap-->
+        <nav class="navbar-expand-md navbar-light bg-light border">
+
+            <ul class="navbar-nav mr-auto mt-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Photography.html">
+                        Photography
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Books.html">
+                        Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Projects.html">
+                        Projects
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <main class="container p-5">
+            <!--p is for padding in bootstrap-->
+            <h1>Homepage</h1>
+            <h3>Welcome to <span id="name">Shawn's</span> very simple webpage.</h3>
+            <img src="City.jpg" alt="Welcome to Shawn's Homepage" style="width:800px;height:300px;">
+
+            <h6>The Content will be split into three different categories.</h6>
+
+            <h3 class=about>Here are some of my hobbies:</h3>
+            <ul style="list-style-type:square">
+                <li>Photogrpahy</li>
+                <li>Books</li>
+                <Li>Projects</Li>
+            </ul>
+
+            <h4 class=about>Here are some of my favorite basketball players</h4>
+
+            <table>
+                <tr>
+                    <th>Team</th>
+                    <th>Player</th>
+                </tr>
+                <tr>
+                    <td>Los Angeles Lakers</td>
+                    <td>Le Bron James</td>
+                </tr>
+                <tr>
+                    <td>Milwaukee Bucks</td>
+                    <td>Giannis Antetokounmpo</td>
+                </tr>
+                <tr>
+                    <td>Brooklyn Nets</td>
+                    <td>Kevin Durant</td>
+                </tr>
+            </table>
+
+        </main>
+
+
+
+    <script src="Script.js"></script>
+    </body>
+
+</html>
