@@ -1,0 +1,42 @@
+
+
+def main():
+    text = input("Text: ")
+
+    L = (float(count_letters(text))/float(count_words(text))) * 100
+    S = (float(count_sentences(text))/float(count_words(text))) * 100
+    index = round(0.0588 * L - 0.296 * S - 15.8)     # Coleman - liau formula returns an int index
+
+    if (index >= 16):
+        print("Grade 16+")
+    elif (index < 1):
+        print("Before Grade 1")
+    else:
+        print(f"Grade {int(index)}")
+
+
+def count_letters(text):  # function to count number of letters in string
+    counter = 0
+    for i in text:
+        if i.isalpha():
+            counter += 1
+    return counter
+
+
+def count_words(text):  # function to count number of words in string
+    counter = 0
+    for i in text:
+        if i.isspace():
+            counter += 1
+    return counter + 1     # add 1 to consider the last word of the string which will not have a blank after it
+    
+
+def count_sentences(text):  # function to count number of sentences in string
+    counter = 0
+    for i in text:
+        if i == '.' or i == '!' or i == '?':
+            counter += 1
+    return counter
+
+
+main()
