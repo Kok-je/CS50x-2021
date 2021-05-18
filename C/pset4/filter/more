@@ -1,0 +1,221 @@
+#include "helpers.h"
+#include <math.h>
+
+// Convert image to grayscale
+void grayscale(int height, int width, RGBTRIPLE image[height][width])
+{
+    for (int i = 0 ; i < height ; i++)
+    {
+        for (int j = 0 ; j < width ; j ++)
+        {
+            if (image[i][j].rgbtBlue == image[i][j].rgbtGreen && image[i][j].rgbtBlue == image[i][j].rgbtRed)
+            {
+                continue;
+            }
+            //take the average of rgb values to determine what shade of gray for new pixel
+            int avg = round(((float)image[i][j].rgbtBlue + (float)image[i][j].rgbtGreen + (float)image[i][j].rgbtRed) / 3);
+
+            image[i][j].rgbtBlue = avg;
+            image[i][j].rgbtGreen = avg;
+            image[i][j].rgbtRed = avg;
+        }
+    }
+
+    return;
+}
+
+// Reflect image horizontally
+void reflect(int height, int width, RGBTRIPLE image[height][width])
+{
+    int halfwaypoint = (int)floor((width - 1) / 2);
+    //loop across all rows
+    for (int i = 0 ; i < height ; i++)
+    {
+        for (int j = 0 ; j < width ; j++)
+        {
+            while (j <= halfwaypoint)
+            {
+                RGBTRIPLE temp = image[i][j];
+                image[i][j] = image[i][(width - 1) - j];
+                image[i][(width - 1) - j] = temp;
+                break;
+            }
+        }
+    }
+
+
+    return;
+}
+
+// Blur image
+void blur(int height, int width, RGBTRIPLE image[height][width])
+{
+    //avergae of original values of pixels around target
+    int avgR, avgB, avgG, counter;
+
+
+    //make a copy of original image for calculations
+    RGBTRIPLE copy[height][width];
+    for (int h = 0; h < height; h++)
+    {
+        for (int w = 0; w < width; w++)
+        {
+            copy[h][w] = image[h][w];
+        }
+    }
+
+
+    //go across image
+    for (int rowimg = 0 ; rowimg < height ; rowimg++)
+    {
+        for (int colimg = 0 ; colimg < width ; colimg++)
+        {
+            //initialize variables reset them to 0
+            avgR = 0;
+            avgB = 0;
+            avgG = 0;
+            counter = 0;
+
+            int startrowbox = -1;
+            int endrowbox = 1;
+            int startcolbox = -1;
+            int endcolbox = 1;
+
+            // Handle edge cases
+            if (rowimg + startrowbox < 0)
+            {
+                startrowbox = 0;
+            }
+            if (colimg + startcolbox < 0)
+            {
+                startcolbox = 0;
+            }
+            if (rowimg + endrowbox >= height)
+            {
+                endrowbox = 0;
+            }
+            if (colimg + endcolbox >= width)
+            {
+                endcolbox = 0;
+            }
+
+
+            //go across pixels around target in 3x3 box
+            for (int rowbox = startrowbox ; rowbox <= endrowbox ; rowbox++)
+            {
+                for (int colbox = startcolbox ; colbox <= endcolbox ; colbox++)
+                {
+                    avgR += copy[rowimg + rowbox][colimg + colbox].rgbtRed;
+                    avgB += copy[rowimg + rowbox][colimg + colbox].rgbtBlue;
+                    avgG += copy[rowimg + rowbox][colimg + colbox].rgbtGreen;
+                    counter++;
+                }
+            }
+            image[rowimg][colimg].rgbtRed = round(avgR / (float) counter);
+            image[rowimg][colimg].rgbtGreen = round(avgG / (float) counter);
+            image[rowimg][colimg].rgbtBlue = round(avgB / (float) counter);
+        }
+    }
+
+    return;
+}
+
+// Detect edges
+void edges(int height, int width, RGBTRIPLE image[height][width])
+{
+    //make a copy of original image for calculations
+    RGBTRIPLE copy[height][width];
+    for (int h = 0; h < height; h++)
+    {
+        for (int w = 0; w < width; w++)
+        {
+            copy[h][w] = image[h][w];
+        }
+    }
+
+
+    //Gx and Gy kernels
+    int Gx[3][3] =
+    {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+       
+    };
+    int Gy[3][3] =
+    {
+        {-1, -2, -1},
+        {0, 0, 0},
+        {1, 2, 1}
+       
+    };
+
+    // loop through each row and each pixel of the image
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            int redx = 0;
+            int greenx = 0;
+            int bluex = 0;
+            int redy = 0;
+            int greeny = 0;
+            int bluey = 0;
+
+            // loop through the pixels 1 row and 1 column from the pixel
+            for (int k = -1; k < 2; k++)
+            {
+                for (int l = -1; l < 2; l++)
+                {
+                    // consider pixels in edges
+                    if (i + k < 0 || i + k >= height || j + l < 0 || j + l >= width)
+                    {
+                        continue;
+                    }
+
+                    // calcuate Gx for each color
+                    redx = redx + (copy[i + k][j + l].rgbtRed * Gx[k + 1][l + 1]);
+                    greenx = greenx + (copy[i + k][j + l].rgbtGreen * Gx[k + 1][l + 1]);
+                    bluex = bluex + (copy[i + k][j + l].rgbtBlue * Gx[k + 1][l + 1]);
+
+                    // calculate Gy for each color
+                    redy = redy + (copy[i + k][j + l].rgbtRed * Gy[k + 1][l + 1]);
+                    greeny = greeny + (copy[i + k][j + l].rgbtGreen * Gy[k + 1][l + 1]);
+                    bluey = bluey + (copy[i + k][j + l].rgbtBlue * Gy[k + 1][l + 1]);
+                }
+            }
+
+            // calculate square root of Gx2 + Gy2 for each color
+            float r = sqrt((redx * redx) + (redy * redy));
+            float g = sqrt((greenx * greenx) + (greeny * greeny));
+            float b = sqrt((bluex * bluex) + (bluey * bluey));
+
+            // round to nearest integer and cap at 255
+            int red =  round(r);
+            int green = round(g);
+            int blue = round(b);
+
+            if (red > 255)
+            {
+                red = 255;
+            }
+                
+            if (green > 255)
+            {
+                green = 255;
+            }
+                
+            if (blue > 255)
+            {
+                blue = 255;
+            }
+                
+
+            // replace color values with new value
+            image[i][j].rgbtRed = red;
+            image[i][j].rgbtBlue = blue;
+            image[i][j].rgbtGreen = green;
+        }
+    }
+    return;
+}
