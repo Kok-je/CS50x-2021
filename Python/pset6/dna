@@ -1,0 +1,60 @@
+import csv
+from sys import argv
+
+
+if len(argv) < 3:
+    print("Error: Invalid argument")
+    exit()
+
+with open(argv[2], 'r') as dnafile:   # read the dna sequence from the txt file
+    dnareader = csv.reader(dnafile)
+    for row in dnareader:
+        dnalist = row
+
+dna = dnalist[0]                 # store the entire chain of dna in a list
+sequences = {}                    # create a dictionary to store sequences to count
+
+with open(argv[1], 'r') as peoplefile:  # extract STR sequences from database into a list
+    people = csv.reader(peoplefile)
+    for row in people:
+        dnaSequences = row
+        dnaSequences.pop(0)      # remove the header row and return STR sequences
+        break
+
+for item in dnaSequences:       # copy the list in a dictionary where the STR sequences are the keys
+    sequences[item] = 1
+
+for key in sequences:       # iterate through dna sequence, when find repetitions of values from STR dictionary, count
+    l = len(key)
+    tempMax = 0
+    temp = 0
+    for i in range(len(dna)):
+
+        if dna[i: i + l] == key:
+            while dna[i: i + l] == dna[i + l: i + l + l]:
+                temp += 1
+                i += l
+
+        if temp > tempMax:  # it compares the value to the previous longest sequence and if it is longer it overrides it
+            tempMax = temp
+
+        while temp > 0:     # after having counted a sequence, skips at the end of it to avoid counting again
+            temp -= 1
+            continue
+
+    sequences[key] += tempMax  # store the longest sequences in the dictionary using the correspondent key
+
+with open(argv[1], newline='') as peoplefile:
+    people = csv.DictReader(peoplefile)
+    for person in people:
+        match = 0
+
+        for i in sequences:
+            if sequences[i] == int(person[i]):
+                match += 1
+
+        if match == len(sequences):
+            print(person['name'])
+            exit()
+
+    print("No match")
