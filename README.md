@@ -38,7 +38,7 @@ CS50 courseload and psets
   * [fiftyville](/Python/pset7/fiftyville)
 - [Problem Set 8: HTML](/HTML/pset8) - <a href='https://cs50.harvard.edu/x/2021/weeks/8/'>HTML, CSS, JAVASCRIPT</a>
   * [trivia](/HTML/Lab8/trivia)
-  * [homepage](/HTML/pset8/homepage)
+  * [homepage](/HTML/pset8/Homepage)
 - [Problem Set 9: Flask](/HTML/pset9) - <a href='https://cs50.harvard.edu/x/2021/weeks/9/'>Flask</a>
   * [birthdays](/HTML/Lab9/birthdays)
   * [finance](/HTML/pset9/finance)
