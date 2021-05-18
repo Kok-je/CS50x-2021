@@ -19,8 +19,7 @@ CS50 courseload and psets
   * [tideman](/C/pset3/tideman)
 - [Problem Set 4: Forensics](/C/pset4) - <a href='https://cs50.harvard.edu/x/2020/psets/4/'> Assignments 4</a> 
   * filter
-    + [less](/C/pset4/filter)
-    + [more](/C/pset4/border-detection)
+    + [more](/C/pset4/filter/more)
   * [recover](/C/pset4/recover)
 - [Problem Set 5: Speller](/C/pset5/speller) - <a href='https://cs50.harvard.edu/x/2020/psets/5/speller/'> Speller assignment</a>
   * [dictionary.c](/C/pset5/speller/dictionary.c)
